@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Flappy Dragon: Volcanic Ascent
 
-## Getting Started
+A Flappy Bird remake built with Next.js, TypeScript, HTML5 Canvas, Tailwind CSS, and the Web Audio API.
 
-First, run the development server:
+## Controls
+
+| Action | Keyboard | Mouse / touch |
+|---|---|---|
+| Flap | Space, ↑, W | Click or tap the game |
+| Pause / resume | Esc, P | II button |
+
+Holding a key flaps once; tap again to flap again. The game pauses when the tab is hidden.
+
+## Scripts
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm dev          # dev server on http://localhost:3000
+pnpm build        # production build
+pnpm lint         # ESLint
+pnpm typecheck    # TypeScript
+pnpm test         # Vitest unit tests (game/)
+pnpm test:e2e     # Playwright smoke test (builds and serves on :3100)
+python3 scripts/prepare_assets.py   # regenerate public/assets from assets/ (needs Pillow)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Project layout
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `game/` — framework-free game core: pure simulation (`physics`, `collision`, `obstacles`, `scoring`, `world`, `loop`, `storage`) plus the browser runtime (`renderer`, `audio`, `input`, `engine`).
+- `components/` — React UI: menus, HUD, overlays, and the canvas host.
+- `assets/` — source art; `public/assets/` — generated web-ready sprites.
+- `docs/superpowers/` — design spec and implementation plan.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Tuning values (gravity, gap size, speed, difficulty ramp) live in `game/config.ts`.

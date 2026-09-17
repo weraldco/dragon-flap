@@ -1,1 +1,21 @@
 @import "tailwindcss";
+
+@theme inline {
+  --font-pixel: var(--font-press-start), ui-monospace, monospace;
+  --color-ember-950: #1a0d0a;
+  --color-ember-900: #2b1410;
+  --color-ember-700: #5a2a1c;
+  --color-lava-500: #f26b1d;
+  --color-lava-300: #ffb347;
+}
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+.pixelated {
+  image-rendering: pixelated;
+}

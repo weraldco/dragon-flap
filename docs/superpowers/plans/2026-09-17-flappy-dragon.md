@@ -84,7 +84,7 @@ vitest.config.mts, playwright.config.ts, README.md
 - Consumes: source art `assets/*.png`
 - Produces: `public/assets/{background.webp, floor.png, dragon-fly-up.png, dragon-fly-normal.png, dragon-fly-down.png, dragon-die.png, rock-tall-1.png, rock-tall-2.png, rock-short-1.png, rock-short-2.png, rock-short-3.png, rock-short-4.png, title.png, start.png, menu.png, restart.png, gameover.png}`; package scripts `dev`, `build`, `start`, `lint`, `typecheck`, `test`, `test:e2e`; import alias `@/*` → repo root.
 
-- [ ] **Step 1: Scaffold into a temp directory and copy in**
+- [x] **Step 1: Scaffold into a temp directory and copy in**
 
 `create-next-app` refuses a folder containing `assets/`, so scaffold elsewhere and copy.
 
@@ -100,7 +100,7 @@ pnpm install
 
 Expected: `app/`, `package.json`, `tsconfig.json`, `eslint.config.mjs`, `postcss.config.mjs`, `next.config.ts` exist at the repo root; `assets/`, `docs/`, `.claude/` untouched.
 
-- [ ] **Step 2: Add test tooling and scripts**
+- [x] **Step 2: Add test tooling and scripts**
 
 ```bash
 pnpm add -D vitest@5.0.1 @playwright/test@1.63.0
@@ -131,7 +131,7 @@ Append to `.gitignore`:
 /playwright/.cache/
 ```
 
-- [ ] **Step 3: Replace the scaffold sample page and styles with a placeholder**
+- [x] **Step 3: Replace the scaffold sample page and styles with a placeholder**
 
 `app/page.tsx`:
 
@@ -149,7 +149,7 @@ export default function Home() {
 
 (Task 10 replaces both. Leave `app/layout.tsx` as scaffolded for now.)
 
-- [ ] **Step 4: Write the asset pipeline script**
+- [x] **Step 4: Write the asset pipeline script**
 
 Create `scripts/prepare_assets.py`:
 
@@ -194,24 +194,24 @@ if __name__ == "__main__":
     main()
 ```
 
-- [ ] **Step 5: Run the pipeline and verify output**
+- [x] **Step 5: Run the pipeline and verify output**
 
 Run: `python3 scripts/prepare_assets.py && ls public/assets | wc -l`
 Expected: 17 `public/assets/...` lines, no assertion error, count `17`; `background.webp` well under the 1.4 MB source.
 
-- [ ] **Step 6: Verify the scaffold builds and checks pass**
+- [x] **Step 6: Verify the scaffold builds and checks pass**
 
 Run: `pnpm lint && pnpm typecheck && pnpm test && pnpm build`
 Expected: all succeed (Vitest finds no test files and exits 0).
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add -A
 git commit -m "chore: scaffold Next.js app, test tooling, and web-ready assets"
 ```
 
-- [ ] **Step 8: Review gate** — dispatch `lgtm-reviewer` (mid-tier model) with this task, the implementer report, and base commit `4476ee1`.
+- [x] **Step 8: Review gate** — dispatch `lgtm-reviewer` (mid-tier model) with this task, the implementer report, and base commit `4476ee1`.
 
 ---
 
@@ -228,7 +228,7 @@ git commit -m "chore: scaffold Next.js app, test tooling, and web-ready assets"
   - `game/rng.ts`: `mulberry32(seed: number): Rng`
   - `game/loop.ts`: `interface FixedClock { acc: number }`; `advance(clock: FixedClock, frameDt: number, step: (dt: number) => void): number` (returns interpolation alpha in [0, 1])
 
-- [ ] **Step 1: Write the types**
+- [x] **Step 1: Write the types**
 
 `game/types.ts`:
 
@@ -313,7 +313,7 @@ export interface GameOverResult {
 }
 ```
 
-- [ ] **Step 2: Write the config**
+- [x] **Step 2: Write the config**
 
 `game/config.ts`:
 
@@ -376,7 +376,7 @@ export const FLASH_TIME = 0.15;
 export const MEDAL_THRESHOLDS = { bronze: 10, silver: 20, gold: 30, platinum: 40 } as const;
 ```
 
-- [ ] **Step 3: Write failing tests for rng and loop**
+- [x] **Step 3: Write failing tests for rng and loop**
 
 `game/rng.test.ts`:
 
@@ -467,12 +467,12 @@ describe('advance', () => {
 });
 ```
 
-- [ ] **Step 4: Run tests to verify they fail**
+- [x] **Step 4: Run tests to verify they fail**
 
 Run: `pnpm vitest run game/rng.test.ts game/loop.test.ts`
 Expected: FAIL — cannot resolve `./rng` and `./loop`.
 
-- [ ] **Step 5: Implement rng and loop**
+- [x] **Step 5: Implement rng and loop**
 
 `game/rng.ts`:
 
@@ -516,19 +516,19 @@ export function advance(clock: FixedClock, frameDt: number, step: (dt: number) =
 }
 ```
 
-- [ ] **Step 6: Run tests to verify they pass**
+- [x] **Step 6: Run tests to verify they pass**
 
 Run: `pnpm vitest run game/rng.test.ts game/loop.test.ts && pnpm typecheck`
 Expected: 8 tests PASS; typecheck clean.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add game/config.ts game/types.ts game/rng.ts game/rng.test.ts game/loop.ts game/loop.test.ts
 git commit -m "feat(game): add config, shared types, seeded rng, and fixed-timestep loop"
 ```
 
-- [ ] **Step 8: Review gate** — dispatch `lgtm-reviewer` (most capable model: engine loop).
+- [x] **Step 8: Review gate** — dispatch `lgtm-reviewer` (most capable model: engine loop).
 
 ---
 
@@ -550,7 +550,7 @@ git commit -m "feat(game): add config, shared types, seeded rng, and fixed-times
   - `saveSaveData(store: KeyValueStore | undefined, data: SaveData): boolean`
   - `getBrowserStore(): KeyValueStore | undefined` (guards `window`; returns `undefined` if access throws)
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 `game/storage.test.ts`:
 
@@ -654,12 +654,12 @@ describe('saveSaveData', () => {
 });
 ```
 
-- [ ] **Step 2: Run tests to verify they fail**
+- [x] **Step 2: Run tests to verify they fail**
 
 Run: `pnpm vitest run game/storage.test.ts`
 Expected: FAIL — cannot resolve `./storage`.
 
-- [ ] **Step 3: Implement storage**
+- [x] **Step 3: Implement storage**
 
 `game/storage.ts`:
 
@@ -733,19 +733,19 @@ export function getBrowserStore(): KeyValueStore | undefined {
 }
 ```
 
-- [ ] **Step 4: Run tests to verify they pass**
+- [x] **Step 4: Run tests to verify they pass**
 
 Run: `pnpm vitest run game/storage.test.ts && pnpm typecheck`
 Expected: 17 tests PASS; typecheck clean.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add game/storage.ts game/storage.test.ts
 git commit -m "feat(game): add validated localStorage save data"
 ```
 
-- [ ] **Step 6: Review gate** — dispatch `lgtm-reviewer` (mid-tier model).
+- [x] **Step 6: Review gate** — dispatch `lgtm-reviewer` (mid-tier model).
 
 ---
 
@@ -765,7 +765,7 @@ git commit -m "feat(game): add validated localStorage save data"
   - `bobDragon(dragon: Dragon, time: number): void`
   - `poseFor(dragon: Dragon, status: GameStatus, time: number): DragonPose`
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 `game/physics.test.ts`:
 
@@ -896,12 +896,12 @@ describe('poseFor', () => {
 });
 ```
 
-- [ ] **Step 2: Run tests to verify they fail**
+- [x] **Step 2: Run tests to verify they fail**
 
 Run: `pnpm vitest run game/physics.test.ts`
 Expected: FAIL — cannot resolve `./physics`.
 
-- [ ] **Step 3: Implement physics**
+- [x] **Step 3: Implement physics**
 
 `game/physics.ts`:
 
@@ -980,19 +980,19 @@ export function poseFor(dragon: Dragon, status: GameStatus, time: number): Drago
 }
 ```
 
-- [ ] **Step 4: Run tests to verify they pass**
+- [x] **Step 4: Run tests to verify they pass**
 
 Run: `pnpm vitest run game/physics.test.ts && pnpm typecheck`
 Expected: 11 tests PASS; typecheck clean.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add game/physics.ts game/physics.test.ts
 git commit -m "feat(game): add dragon physics, tilt, and pose selection"
 ```
 
-- [ ] **Step 6: Review gate** — dispatch `lgtm-reviewer` (most capable model: physics).
+- [x] **Step 6: Review gate** — dispatch `lgtm-reviewer` (most capable model: physics).
 
 ---
 
@@ -1009,7 +1009,7 @@ git commit -m "feat(game): add dragon physics, tilt, and pose selection"
   - `hitsObstacle(box: Rect, obstacle: Obstacle): boolean` (inactive obstacles never hit; the top column extends infinitely upward, the bottom column infinitely downward)
   - `hitsFloor(box: Rect): boolean` (hitbox bottom ≥ `FLOOR_Y`)
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 `game/collision.test.ts`:
 
@@ -1105,12 +1105,12 @@ describe('hitsFloor', () => {
 });
 ```
 
-- [ ] **Step 2: Run tests to verify they fail**
+- [x] **Step 2: Run tests to verify they fail**
 
 Run: `pnpm vitest run game/collision.test.ts`
 Expected: FAIL — cannot resolve `./collision`.
 
-- [ ] **Step 3: Implement collision**
+- [x] **Step 3: Implement collision**
 
 `game/collision.ts`:
 
@@ -1150,19 +1150,19 @@ export function hitsFloor(box: Rect): boolean {
 }
 ```
 
-- [ ] **Step 4: Run tests to verify they pass**
+- [x] **Step 4: Run tests to verify they pass**
 
 Run: `pnpm vitest run game/collision.test.ts && pnpm typecheck`
 Expected: 9 tests PASS; typecheck clean.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add game/collision.ts game/collision.test.ts
 git commit -m "feat(game): add forgiving hitbox collision"
 ```
 
-- [ ] **Step 6: Review gate** — dispatch `lgtm-reviewer` (most capable model: collision).
+- [x] **Step 6: Review gate** — dispatch `lgtm-reviewer` (most capable model: collision).
 
 ---
 
@@ -1189,7 +1189,7 @@ git commit -m "feat(game): add forgiving hitbox collision"
     - `updateScore(field: Pick<WorldState, 'obstacles' | 'score'>, dragonX: number): boolean`
     - `medalFor(score: number): Medal`
 
-- [ ] **Step 1: Write the failing obstacle tests**
+- [x] **Step 1: Write the failing obstacle tests**
 
 `game/obstacles.test.ts`:
 
@@ -1337,7 +1337,7 @@ describe('updateObstacles', () => {
 });
 ```
 
-- [ ] **Step 2: Write the failing scoring tests**
+- [x] **Step 2: Write the failing scoring tests**
 
 `game/scoring.test.ts`:
 
@@ -1389,12 +1389,12 @@ describe('medalFor', () => {
 });
 ```
 
-- [ ] **Step 3: Run tests to verify they fail**
+- [x] **Step 3: Run tests to verify they fail**
 
 Run: `pnpm vitest run game/obstacles.test.ts game/scoring.test.ts`
 Expected: FAIL — cannot resolve `./obstacles` and `./scoring`.
 
-- [ ] **Step 4: Implement obstacles**
+- [x] **Step 4: Implement obstacles**
 
 `game/obstacles.ts`:
 
@@ -1522,7 +1522,7 @@ export function updateObstacles(field: ObstacleField, dt: number, rng: Rng): voi
 }
 ```
 
-- [ ] **Step 5: Implement scoring**
+- [x] **Step 5: Implement scoring**
 
 `game/scoring.ts`:
 
@@ -1551,19 +1551,19 @@ export function medalFor(score: number): Medal {
 }
 ```
 
-- [ ] **Step 6: Run tests to verify they pass**
+- [x] **Step 6: Run tests to verify they pass**
 
 Run: `pnpm vitest run game/obstacles.test.ts game/scoring.test.ts && pnpm typecheck`
 Expected: obstacles 15 PASS, scoring 10 PASS; typecheck clean.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add game/obstacles.ts game/obstacles.test.ts game/scoring.ts game/scoring.test.ts
 git commit -m "feat(game): add obstacle spawning, difficulty ramp, scoring, and medals"
 ```
 
-- [ ] **Step 8: Review gate** — dispatch `lgtm-reviewer` (most capable model: simulation).
+- [x] **Step 8: Review gate** — dispatch `lgtm-reviewer` (most capable model: simulation).
 
 ---
 
@@ -1583,7 +1583,7 @@ git commit -m "feat(game): add obstacle spawning, difficulty ramp, scoring, and 
 
   `stepWorld` behavior: clears `events`, then snapshots `prev*` fields on every call. `paused` → nothing else. Otherwise `shakeTimer`/`flashTimer` tick down. `gameover` → nothing else. `menu`/`ready` → time, scroll, bob. `playing` → time, scroll, physics, obstacles, score (+ difficulty on score), collision → `dying` with `events.died` (landing immediately if the floor was hit). `dying` → no scroll; the dragon falls with rotation held at 0 until landed; once landed and `deathTimer ≥ GAMEOVER_DELAY` → `gameover` with `events.gameOver`. Transitions `ready → playing` and `playing ⇄ paused` are made by the engine, not by `stepWorld`.
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 `game/world.test.ts`:
 
@@ -1740,12 +1740,12 @@ describe('determinism', () => {
 });
 ```
 
-- [ ] **Step 2: Run tests to verify they fail**
+- [x] **Step 2: Run tests to verify they fail**
 
 Run: `pnpm vitest run game/world.test.ts`
 Expected: FAIL — cannot resolve `./world`.
 
-- [ ] **Step 3: Implement the world**
+- [x] **Step 3: Implement the world**
 
 `game/world.ts`:
 
@@ -1893,24 +1893,24 @@ export function stepWorld(world: WorldState, dt: number, rng: Rng, events: StepE
 }
 ```
 
-- [ ] **Step 4: Run tests to verify they pass**
+- [x] **Step 4: Run tests to verify they pass**
 
 Run: `pnpm vitest run game/world.test.ts && pnpm typecheck`
 Expected: 9 tests PASS; typecheck clean.
 
-- [ ] **Step 5: Run the whole unit suite**
+- [x] **Step 5: Run the whole unit suite**
 
 Run: `pnpm test`
 Expected: all 8 `game/*.test.ts` files PASS (79 tests).
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add game/world.ts game/world.test.ts
 git commit -m "feat(game): add deterministic world simulation with dying and gameover states"
 ```
 
-- [ ] **Step 7: Review gate** — dispatch `lgtm-reviewer` (most capable model: simulation).
+- [x] **Step 7: Review gate** — dispatch `lgtm-reviewer` (most capable model: simulation).
 
 ---
 
@@ -1935,7 +1935,7 @@ git commit -m "feat(game): add deterministic world simulation with dying and gam
 
 These are browser modules without unit tests (spec §14). They are verified by typecheck/lint here and visually in Task 10.
 
-- [ ] **Step 1: Implement the sprite loader**
+- [x] **Step 1: Implement the sprite loader**
 
 `game/assets.ts`:
 
@@ -1999,7 +1999,7 @@ export async function loadSprites(onProgress?: (loaded: number, total: number) =
 }
 ```
 
-- [ ] **Step 2: Implement the renderer**
+- [x] **Step 2: Implement the renderer**
 
 `game/renderer.ts`:
 
@@ -2140,19 +2140,19 @@ export function render(
 }
 ```
 
-- [ ] **Step 3: Verify types and lint**
+- [x] **Step 3: Verify types and lint**
 
 Run: `pnpm typecheck && pnpm lint`
 Expected: both clean.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add game/assets.ts game/renderer.ts
 git commit -m "feat(game): add sprite loader and pixel-art canvas renderer"
 ```
 
-- [ ] **Step 5: Review gate** — dispatch `lgtm-reviewer` (mid-tier model).
+- [x] **Step 5: Review gate** — dispatch `lgtm-reviewer` (mid-tier model).
 
 ---
 
@@ -2173,7 +2173,7 @@ git commit -m "feat(game): add sprite loader and pixel-art canvas renderer"
     - `createEngine(options: EngineOptions): Engine` (throws `UnsupportedCanvasError` from `setupCanvas`; starts the rAF loop in `menu`)
   - Event order on game over: `onGameOver(result)` then `onStatusChange('gameover')`.
 
-- [ ] **Step 1: Implement audio**
+- [x] **Step 1: Implement audio**
 
 `game/audio.ts`:
 
@@ -2323,7 +2323,7 @@ function noiseBurst(
 }
 ```
 
-- [ ] **Step 2: Implement input**
+- [x] **Step 2: Implement input**
 
 `game/input.ts`:
 
@@ -2372,7 +2372,7 @@ export function bindInput(canvas: HTMLCanvasElement, handlers: InputHandlers): (
 }
 ```
 
-- [ ] **Step 3: Implement the engine**
+- [x] **Step 3: Implement the engine**
 
 `game/engine.ts`:
 
@@ -2522,19 +2522,19 @@ export function createEngine(options: EngineOptions): Engine {
 }
 ```
 
-- [ ] **Step 4: Verify types, lint, and unit suite**
+- [x] **Step 4: Verify types, lint, and unit suite**
 
 Run: `pnpm typecheck && pnpm lint && pnpm test`
 Expected: all clean; unit suite still PASS.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add game/audio.ts game/input.ts game/engine.ts
 git commit -m "feat(game): add synthesized audio, input binding, and fixed-step engine"
 ```
 
-- [ ] **Step 6: Review gate** — dispatch `lgtm-reviewer` (most capable model: engine loop).
+- [x] **Step 6: Review gate** — dispatch `lgtm-reviewer` (most capable model: engine loop).
 
 ---
 
@@ -2551,7 +2551,7 @@ git commit -m "feat(game): add synthesized audio, input binding, and fixed-step 
   - Buttons with accessible names: `Start game`, `Settings`, `Pause`, `Resume`, `Back to menu`, `Restart`, `Done`, `Retry`
   - Dialogs with accessible names: `Paused`, `Game over`, `Settings`
 
-- [ ] **Step 1: Theme, layout, and page**
+- [x] **Step 1: Theme, layout, and page**
 
 `app/globals.css`:
 
@@ -2629,7 +2629,7 @@ export default function Home() {
 }
 ```
 
-- [ ] **Step 2: Frame and client-only wrapper**
+- [x] **Step 2: Frame and client-only wrapper**
 
 `components/GameFrame.tsx`:
 
@@ -2670,7 +2670,7 @@ export default function ClientGame() {
 }
 ```
 
-- [ ] **Step 3: UI primitives**
+- [x] **Step 3: UI primitives**
 
 `components/ui/TextButton.tsx`:
 
@@ -2745,7 +2745,7 @@ export function MedalBadge({ medal }: { medal: Medal }) {
 }
 ```
 
-- [ ] **Step 4: Screens**
+- [x] **Step 4: Screens**
 
 `components/screens/LoadingScreen.tsx`:
 
@@ -3050,7 +3050,7 @@ export function GameOver({ result, onRestart, onMenu }: GameOverProps) {
 }
 ```
 
-- [ ] **Step 5: Canvas component**
+- [x] **Step 5: Canvas component**
 
 `components/GameCanvas.tsx`:
 
@@ -3109,7 +3109,7 @@ export function GameCanvas({ sprites, audio, events, bestScore, reducedMotion, o
 }
 ```
 
-- [ ] **Step 6: Root component**
+- [x] **Step 6: Root component**
 
 `components/GameRoot.tsx`:
 
@@ -3322,12 +3322,12 @@ export default function GameRoot() {
 }
 ```
 
-- [ ] **Step 7: Verify checks**
+- [x] **Step 7: Verify checks**
 
 Run: `pnpm lint && pnpm typecheck && pnpm test && pnpm build`
 Expected: all clean. If a React hooks lint rule flags a specific line, change that line to satisfy the rule without changing behavior, and note it in the report.
 
-- [ ] **Step 8: Play-test in the browser**
+- [x] **Step 8: Play-test in the browser**
 
 Run `pnpm dev`, open `http://localhost:3000`, and confirm each item (record results in the report):
 1. Loading bar → menu with scrolling volcanic background and floor, bobbing dragon, title, Start, Best, Settings.
@@ -3343,14 +3343,14 @@ Run `pnpm dev`, open `http://localhost:3000`, and confirm each item (record resu
 
 Tune `game/config.ts` only if something is clearly off (e.g. `FLOOR_Y` not matching the drawn ground surface). List each change and why in the report, and re-run `pnpm test`.
 
-- [ ] **Step 9: Commit**
+- [x] **Step 9: Commit**
 
 ```bash
 git add app components game/config.ts
 git commit -m "feat(ui): add React menus, HUD, overlays, and game shell"
 ```
 
-- [ ] **Step 10: Review gate** — dispatch `lgtm-reviewer` (mid-tier model).
+- [x] **Step 10: Review gate** — dispatch `lgtm-reviewer` (mid-tier model).
 
 ---
 
@@ -3363,7 +3363,7 @@ git commit -m "feat(ui): add React menus, HUD, overlays, and game shell"
 **Interfaces:**
 - Consumes: Task 10 DOM contract (`data-testid="game-root"`, `data-status`, button and dialog names)
 
-- [ ] **Step 1: Configure Playwright**
+- [x] **Step 1: Configure Playwright**
 
 ```bash
 pnpm exec playwright install chromium
@@ -3393,7 +3393,7 @@ export default defineConfig({
 });
 ```
 
-- [ ] **Step 2: Write the smoke test**
+- [x] **Step 2: Write the smoke test**
 
 `e2e/smoke.spec.ts`:
 
@@ -3420,14 +3420,14 @@ test('plays a round, dies, and restarts', async ({ page }) => {
 });
 ```
 
-- [ ] **Step 3: Run the smoke test**
+- [x] **Step 3: Run the smoke test**
 
 Run: `pnpm test:e2e`
 Expected: `1 passed`.
 
 If it fails, follow superpowers:systematic-debugging and inspect the trace in `test-results/`. Do not weaken assertions to make it pass.
 
-- [ ] **Step 4: Write the README**
+- [x] **Step 4: Write the README**
 
 `README.md`:
 
@@ -3467,12 +3467,12 @@ python3 scripts/prepare_assets.py   # regenerate public/assets from assets/ (nee
 Tuning values (gravity, gap size, speed, difficulty ramp) live in `game/config.ts`.
 ````
 
-- [ ] **Step 5: Full gate**
+- [x] **Step 5: Full gate**
 
 Run: `pnpm lint && pnpm typecheck && pnpm test && pnpm build && pnpm test:e2e`
 Expected: all pass.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add playwright.config.ts e2e/smoke.spec.ts README.md

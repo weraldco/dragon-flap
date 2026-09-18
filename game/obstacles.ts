@@ -19,10 +19,10 @@ import type { Obstacle, RockSprite, Rng, WorldState } from './types';
 
 export type ObstacleField = Pick<WorldState, 'obstacles' | 'speed' | 'gapSize' | 'lastGapCenter'>;
 
-const HANGING_ROCK: RockSprite = 'rock-short-3';
-const SHORT_UP_ROCKS: readonly RockSprite[] = ['rock-short-1', 'rock-short-2', 'rock-short-4'];
-const TALL_UP_ROCKS: readonly RockSprite[] = ['rock-tall-1', 'rock-tall-2'];
-const SHORT_TOP_ROCKS: readonly RockSprite[] = [...SHORT_UP_ROCKS, HANGING_ROCK];
+const SHORT_TOP_ROCKS: readonly RockSprite[] = ['rock-short-2', 'rock-short-3'];
+const SHORT_BOTTOM_ROCKS: readonly RockSprite[] = ['rock-short-1', 'rock-short-4'];
+const TALL_TOP_ROCKS: readonly RockSprite[] = ['rock-tall-2'];
+const TALL_BOTTOM_ROCKS: readonly RockSprite[] = ['rock-tall-1'];
 
 export function createObstacle(): Obstacle {
   return {
@@ -32,7 +32,7 @@ export function createObstacle(): Obstacle {
     gapCenter: 0,
     gapSize: GAP_START,
     passed: false,
-    topSprite: HANGING_ROCK,
+    topSprite: 'rock-short-2',
     topFlipped: false,
     bottomSprite: 'rock-short-1',
   };
@@ -74,14 +74,13 @@ export function chooseRockSprites(obstacle: Obstacle, rng: Rng): void {
   const bottomLength = FLOOR_Y - (obstacle.gapCenter + obstacle.gapSize / 2);
 
   if (topLength > TALL_ROCK_THRESHOLD) {
-    obstacle.topSprite = pick(TALL_UP_ROCKS, rng);
-    obstacle.topFlipped = true;
+    obstacle.topSprite = pick(TALL_TOP_ROCKS, rng);
   } else {
     obstacle.topSprite = pick(SHORT_TOP_ROCKS, rng);
-    obstacle.topFlipped = obstacle.topSprite !== HANGING_ROCK;
   }
+  obstacle.topFlipped = false;
 
-  obstacle.bottomSprite = pick(bottomLength > TALL_ROCK_THRESHOLD ? TALL_UP_ROCKS : SHORT_UP_ROCKS, rng);
+  obstacle.bottomSprite = pick(bottomLength > TALL_ROCK_THRESHOLD ? TALL_BOTTOM_ROCKS : SHORT_BOTTOM_ROCKS, rng);
 }
 
 export function spawnObstacle(

@@ -68,34 +68,43 @@ describe('nextGapCenter', () => {
 
 describe('chooseRockSprites', () => {
   // gapCenter 300 / gapSize 190 → top column 205 px (short), bottom column 285 px (tall).
-  it('uses short rocks for short columns and tall rocks for long ones', () => {
+  it('uses a native top short rock and a bottom tall rock', () => {
     const o = createObstacle();
     o.gapCenter = 300;
     o.gapSize = 190;
     chooseRockSprites(o, () => 0.99);
     expect(o.topSprite).toBe('rock-short-3');
     expect(o.topFlipped).toBe(false);
-    expect(o.bottomSprite).toBe('rock-tall-2');
+    expect(o.bottomSprite).toBe('rock-tall-1');
   });
 
-  it('flips upward rocks used on top', () => {
+  it('uses rock-short-2 only on top and keeps it upright', () => {
     const o = createObstacle();
     o.gapCenter = 300;
     o.gapSize = 190;
     chooseRockSprites(o, () => 0);
-    expect(o.topSprite).toBe('rock-short-1');
-    expect(o.topFlipped).toBe(true);
+    expect(o.topSprite).toBe('rock-short-2');
+    expect(o.topFlipped).toBe(false);
   });
 
   // gapCenter 480 / gapSize 150 → top column 405 px (tall), bottom column 125 px (short).
-  it('flips tall rocks used on top', () => {
+  it('uses the native tall top rock and a bottom short rock', () => {
     const o = createObstacle();
     o.gapCenter = 480;
     o.gapSize = 150;
     chooseRockSprites(o, () => 0);
-    expect(o.topSprite).toBe('rock-tall-1');
-    expect(o.topFlipped).toBe(true);
+    expect(o.topSprite).toBe('rock-tall-2');
+    expect(o.topFlipped).toBe(false);
     expect(o.bottomSprite).toBe('rock-short-1');
+  });
+
+  it('uses rock-short-4 only on the bottom', () => {
+    const o = createObstacle();
+    o.gapCenter = 480;
+    o.gapSize = 150;
+    chooseRockSprites(o, () => 0.99);
+    expect(o.topSprite).toBe('rock-tall-2');
+    expect(o.bottomSprite).toBe('rock-short-4');
   });
 });
 

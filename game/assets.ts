@@ -45,12 +45,20 @@ function loadImage(src: string): Promise<HTMLImageElement> {
 export async function loadSprites(onProgress?: (loaded: number, total: number) => void): Promise<Sprites> {
   const entries = Object.entries(SPRITE_MANIFEST) as [SpriteKey, string][];
   let loaded = 0;
+  let failed = false;
   const images = await Promise.all(
     entries.map(async ([key, src]) => {
-      const img = await loadImage(src);
-      loaded += 1;
-      onProgress?.(loaded, entries.length);
-      return [key, img] as const;
+      try {
+        const img = await loadImage(src);
+        if (!failed) {
+          loaded += 1;
+          onProgress?.(loaded, entries.length);
+        }
+        return [key, img] as const;
+      } catch (error) {
+        failed = true;
+        throw error;
+      }
     }),
   );
   return Object.fromEntries(images) as Sprites;

@@ -3479,4 +3479,4 @@ git add playwright.config.ts e2e/smoke.spec.ts README.md
 git commit -m "test: add Playwright smoke test and project README"
 ```
 
-- [ ] **Step 7: End-of-plan review gate** — dispatch `lgtm-reviewer` (most capable model) in end-of-plan mode over `4476ee1..HEAD`, including the full gate run.
+- [x] **Step 7: End-of-plan review gate** — dispatch `lgtm-reviewer` (most capable model) in end-of-plan mode over `4476ee1..HEAD`, including the full gate run.

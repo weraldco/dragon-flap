@@ -17,7 +17,7 @@ export const ROTATION_EASE = 10;
 
 export const DRAGON_X = WIDTH * 0.3;
 export const DRAGON_START_Y = HEIGHT * 0.42;
-export const DRAGON_DRAW_HEIGHT = 64;
+export const DRAGON_DRAW_HEIGHT = 72;
 export const DRAGON_BODY_WIDTH = 56;
 export const DRAGON_BODY_HEIGHT = 64;
 export const DRAGON_HITBOX_SCALE = 0.7;

@@ -17,7 +17,7 @@ export const ROTATION_EASE = 10;
 
 export const DRAGON_X = WIDTH * 0.3;
 export const DRAGON_START_Y = HEIGHT * 0.42;
-export const DRAGON_DRAW_HEIGHT = 72;
+export const DRAGON_DRAW_HEIGHT = 90;
 export const DRAGON_BODY_WIDTH = 56;
 export const DRAGON_BODY_HEIGHT = 64;
 export const DRAGON_HITBOX_SCALE = 0.7;
@@ -34,6 +34,7 @@ export const OBSTACLE_SPACING = 230;
 export const OBSTACLE_HITBOX_INSET = 6;
 export const OBSTACLE_POOL_SIZE = 4;
 export const OBSTACLE_FLOOR_SINK = 40;
+export const OBSTACLE_CEILING_OVERHANG = 24;
 export const FIRST_OBSTACLE_X = WIDTH + 60;
 export const TALL_ROCK_THRESHOLD = 220;
 

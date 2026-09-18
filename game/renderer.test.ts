@@ -8,7 +8,6 @@ function image(width: number, height: number): HTMLImageElement {
 }
 
 function sprites(): Sprites {
-  const rock = image(196, 273);
   const dragon = image(235, 256);
   return {
     background: image(432, 768),
@@ -17,12 +16,12 @@ function sprites(): Sprites {
     'dragon-fly-normal': dragon,
     'dragon-fly-down': dragon,
     'dragon-die': dragon,
-    'rock-tall-1': rock,
-    'rock-tall-2': rock,
-    'rock-short-1': rock,
-    'rock-short-2': rock,
-    'rock-short-3': rock,
-    'rock-short-4': rock,
+    'rock-tall-1': image(196, 454),
+    'rock-tall-2': image(196, 451),
+    'rock-short-1': image(196, 273),
+    'rock-short-2': image(196, 275),
+    'rock-short-3': image(219, 234),
+    'rock-short-4': image(219, 240),
   };
 }
 
@@ -40,7 +39,7 @@ function context(): CanvasRenderingContext2D {
 }
 
 describe('render', () => {
-  it('draws the dragon at 72 pixels high while preserving its aspect ratio', () => {
+  it('draws the dragon at 90 pixels high while preserving its aspect ratio', () => {
     const ctx = context();
     const gameSprites = sprites();
 
@@ -49,7 +48,31 @@ describe('render', () => {
     const drawCalls = vi.mocked(ctx.drawImage).mock.calls;
     const dragonCall = drawCalls.find(([sprite]) => sprite === gameSprites['dragon-fly-normal']);
     expect(dragonCall).toBeDefined();
-    expect(dragonCall?.[3]).toBeCloseTo((235 * 72) / 256);
-    expect(dragonCall?.[4]).toBe(72);
+    expect(dragonCall?.[3]).toBeCloseTo((235 * 90) / 256);
+    expect(dragonCall?.[4]).toBe(90);
+  });
+
+  it('extends top rocks above the canvas while keeping their tips aligned to the gap', () => {
+    const ctx = context();
+    const gameSprites = sprites();
+    const world = createWorld();
+    Object.assign(world.obstacles[0], {
+      active: true,
+      x: 300,
+      prevX: 300,
+      gapCenter: 300,
+      gapSize: 190,
+      topSprite: 'rock-short-3',
+      topFlipped: false,
+      bottomSprite: 'rock-short-1',
+    });
+
+    render(ctx, gameSprites, world, 1, { reducedMotion: true });
+
+    const drawCalls = vi.mocked(ctx.drawImage).mock.calls;
+    const topRockCall = drawCalls.find(([sprite]) => sprite === gameSprites['rock-short-3']);
+    expect(topRockCall).toBeDefined();
+    expect(topRockCall?.[2]).toBe(-24);
+    expect(Number(topRockCall?.[2]) + Number(topRockCall?.[4])).toBe(205);
   });
 });

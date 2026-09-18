@@ -5,6 +5,7 @@ import {
   FLOOR_DRAW_HEIGHT,
   FLOOR_Y,
   HEIGHT,
+  OBSTACLE_CEILING_OVERHANG,
   OBSTACLE_FLOOR_SINK,
   OBSTACLE_WIDTH,
   SHAKE_MAGNITUDE,
@@ -83,7 +84,13 @@ function drawObstacle(ctx: CanvasRenderingContext2D, sprites: Sprites, obstacle:
     ctx.drawImage(top, 0, 0, OBSTACLE_WIDTH, gapTop);
     ctx.restore();
   } else {
-    ctx.drawImage(top, left, 0, OBSTACLE_WIDTH, gapTop);
+    ctx.drawImage(
+      top,
+      left,
+      -OBSTACLE_CEILING_OVERHANG,
+      OBSTACLE_WIDTH,
+      gapTop + OBSTACLE_CEILING_OVERHANG,
+    );
   }
 
   const bottomHeight = FLOOR_Y - gapBottom + OBSTACLE_FLOOR_SINK;
